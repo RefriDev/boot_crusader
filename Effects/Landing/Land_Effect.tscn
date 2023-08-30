@@ -1,0 +1,59 @@
+[gd_scene load_steps=11 format=3 uid="uid://bdeyd4bk8w8nr"]
+
+[ext_resource type="Script" path="res://Effects/Landing/land_effect.gd" id="1_5j836"]
+[ext_resource type="Texture2D" uid="uid://yuw5xi0sx1gu" path="res://Effects/Landing/landing_effect1.png" id="2_it8ml"]
+[ext_resource type="Texture2D" uid="uid://cucouijgx06hh" path="res://Effects/Landing/landing_effect2.png" id="3_tlvye"]
+[ext_resource type="Texture2D" uid="uid://ccnftqvpsynqx" path="res://Effects/Landing/landing_effect3.png" id="4_v1f0w"]
+[ext_resource type="Texture2D" uid="uid://dg10cvu8gnj2w" path="res://Effects/Landing/landing_effect4.png" id="5_62nfn"]
+[ext_resource type="Texture2D" uid="uid://41kxu1io8adn" path="res://Effects/Landing/landing_effect5.png" id="6_fctua"]
+[ext_resource type="Texture2D" uid="uid://b3bjdigkcgvj3" path="res://Effects/Landing/landing_effect6.png" id="7_su11y"]
+[ext_resource type="Texture2D" uid="uid://bvq8kkuikfy1f" path="res://Effects/Landing/landing_effect7.png" id="8_wc80y"]
+[ext_resource type="Texture2D" uid="uid://dk1tl6e1gfelg" path="res://Effects/Landing/landing_effect8.png" id="9_7x4xd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rgahb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_it8ml")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_tlvye")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_v1f0w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_62nfn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_fctua")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_su11y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wc80y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_7x4xd")
+}],
+"loop": false,
+"name": &"landing",
+"speed": 20.0
+}]
+
+[node name="Land_Effect" type="Node2D"]
+script = ExtResource("1_5j836")
+
+[node name="Effects_Left" type="AnimatedSprite2D" parent="."]
+position = Vector2(-10, 7)
+sprite_frames = SubResource("SpriteFrames_rgahb")
+animation = &"landing"
+
+[node name="Effects_Right" type="AnimatedSprite2D" parent="."]
+position = Vector2(10, 7)
+sprite_frames = SubResource("SpriteFrames_rgahb")
+animation = &"landing"
+flip_h = true
+
+[connection signal="animation_finished" from="Effects_Left" to="." method="_on_effects_left_animation_finished"]

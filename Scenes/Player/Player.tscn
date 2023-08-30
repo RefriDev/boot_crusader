@@ -1,0 +1,178 @@
+[gd_scene load_steps=25 format=3 uid="uid://dx4ue2pq60yx7"]
+
+[ext_resource type="Texture2D" uid="uid://cm4f3p60c68p4" path="res://Scenes/Player/player_animations1.png" id="1_hs1oh"]
+[ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="1_pw1nb"]
+[ext_resource type="PackedScene" uid="uid://bdeyd4bk8w8nr" path="res://Effects/Landing/Land_Effect.tscn" id="2_4sjnv"]
+[ext_resource type="Texture2D" uid="uid://bqvyqgls1ovsf" path="res://Scenes/Player/player_animations5.png" id="2_i2kut"]
+[ext_resource type="Texture2D" uid="uid://baviexhyxq4fn" path="res://Scenes/Player/player_animations2.png" id="3_oohln"]
+[ext_resource type="Texture2D" uid="uid://c73501qdpgvsh" path="res://Scenes/Player/player_animations3.png" id="4_agx34"]
+[ext_resource type="Texture2D" uid="uid://csgqw0baegjv7" path="res://Scenes/Player/player_animations4.png" id="5_2fol7"]
+[ext_resource type="Texture2D" uid="uid://bqec4k8q3yxnm" path="res://Effects/Walk/walk_effect1.png" id="8_l34oo"]
+[ext_resource type="Texture2D" uid="uid://ctndjygiheejs" path="res://Effects/Walk/walk_effect2.png" id="9_ixnbl"]
+[ext_resource type="Texture2D" uid="uid://dibcpg3tc060f" path="res://Effects/Walk/walk_effect3.png" id="10_x4w46"]
+[ext_resource type="Texture2D" uid="uid://cd43ueg1e5vaq" path="res://Effects/Walk/walk_effect4.png" id="11_npnlv"]
+[ext_resource type="Texture2D" uid="uid://dnxtjix8hl0rb" path="res://Effects/Walk/walk_effect5.png" id="12_4ffku"]
+[ext_resource type="Texture2D" uid="uid://bbd8pjxlmdnme" path="res://Effects/Walk/walk_effect6.png" id="13_eoolk"]
+[ext_resource type="Texture2D" uid="uid://c4kvw8prfvkdq" path="res://Effects/Walk/walk_effect7.png" id="14_e7ld1"]
+[ext_resource type="Texture2D" uid="uid://bmu4axnaoforr" path="res://Effects/Walk/walk_effect8.png" id="15_h04if"]
+[ext_resource type="Texture2D" uid="uid://dw47kv8scs1bc" path="res://Effects/Walk/walk_effect9.png" id="16_4artl"]
+[ext_resource type="AudioStream" uid="uid://owo1rj1u27oh" path="res://Sounds/jump.wav" id="17_igev8"]
+[ext_resource type="AudioStream" uid="uid://bebl4vletpv4a" path="res://Sounds/hitHurt3.wav" id="18_vju2c"]
+[ext_resource type="AudioStream" uid="uid://xdwmglqinh0r" path="res://Sounds/hitEnemy.wav" id="19_ud65h"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mam0g"]
+radius = 6.0
+height = 32.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yaqd5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_hs1oh")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_i2kut")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_hs1oh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_oohln")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_agx34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_2fol7")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_us4yv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_l34oo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ixnbl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_x4w46")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_npnlv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_4ffku")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_eoolk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_e7ld1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_h04if")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_4artl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d8svv"]
+radius = 1.0
+height = 16.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gh77w"]
+radius = 1.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 33
+script = ExtResource("1_pw1nb")
+land_effect = ExtResource("2_4sjnv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_mam0g")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-11, -16)
+sprite_frames = SubResource("SpriteFrames_yaqd5")
+animation = &"walk"
+frame_progress = 0.0862887
+centered = false
+
+[node name="Effect_Anchor" type="Node2D" parent="."]
+
+[node name="Walk_Effect" type="AnimatedSprite2D" parent="Effect_Anchor"]
+position = Vector2(-10, 0)
+sprite_frames = SubResource("SpriteFrames_us4yv")
+frame = 8
+
+[node name="Start_Timer" type="Timer" parent="."]
+wait_time = 0.75
+autostart = true
+
+[node name="Boots" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boots"]
+position = Vector2(0, 16)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_d8svv")
+
+[node name="Hitbox_Left" type="Area2D" parent="."]
+position = Vector2(4, 0)
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox_Left"]
+position = Vector2(-9, 0)
+shape = SubResource("CapsuleShape2D_gh77w")
+
+[node name="Hitbox_Right" type="Area2D" parent="."]
+position = Vector2(4, 0)
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox_Right"]
+position = Vector2(1, 0)
+shape = SubResource("CapsuleShape2D_gh77w")
+
+[node name="Jump_Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_igev8")
+
+[node name="Hit_Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_vju2c")
+
+[node name="Stomp_Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_ud65h")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_speed = 20.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_top_margin = 0.6
+drag_bottom_margin = 0.1
+
+[connection signal="timeout" from="Start_Timer" to="." method="_on_start_timer_timeout"]
+[connection signal="area_entered" from="Boots" to="." method="_on_boots_area_entered"]
+[connection signal="body_entered" from="Hitbox_Left" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="Hitbox_Right" to="." method="_on_hitbox_right_body_entered"]

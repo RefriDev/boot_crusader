@@ -1,0 +1,121 @@
+[gd_scene load_steps=11 format=3 uid="uid://bvgxvmn5sdbhu"]
+
+[ext_resource type="Script" path="res://Enemies/Bat/Bat.gd" id="1_djdwx"]
+[ext_resource type="Texture2D" uid="uid://cbevs18e03cyw" path="res://Enemies/Bat/bat2.png" id="1_vr2q7"]
+[ext_resource type="Texture2D" uid="uid://m21s1dgjux5t" path="res://Enemies/Bat/bat3.png" id="2_6efcn"]
+[ext_resource type="Texture2D" uid="uid://dw016e11yqngc" path="res://Enemies/Bat/bat4.png" id="3_gx1t6"]
+[ext_resource type="Texture2D" uid="uid://c3af3ni13jk4i" path="res://Enemies/Bat/bat1.png" id="4_3xy06"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jc1dk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_vr2q7")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6efcn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_gx1t6")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_3xy06")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_721tc"]
+radius = 7.0
+height = 32.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3rlys"]
+size = Vector2(52.75, 171)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_almlk"]
+radius = 1.0
+height = 18.0
+
+[sub_resource type="Curve2D" id="Curve2D_rp6xw"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 3, 0, 0, 0, 0, 0, -1, -12, 0, 0, 0, 0, -9, -12, 0, 0, 0, 0, -12, -12, 0, 0, 0, 0, -20, -7, 0, 0, 0, 0, -22, 2, 0, 0, 0, 0, -25, 14, 0, 0, 0, 0, -28, 34, 0, 0, 0, 0, -32, 84, 0, 0, 0, 0, -33, 143)
+}
+point_count = 10
+
+[node name="Bat" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_djdwx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jc1dk")
+animation = &"idle"
+frame_progress = 0.637829
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 9)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_721tc")
+
+[node name="Detect_Area_Left" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detect_Area_Left"]
+position = Vector2(-26.375, 75.5)
+shape = SubResource("RectangleShape2D_3rlys")
+debug_color = Color(0.658824, 0.513726, 0, 0.419608)
+
+[node name="Detect_Area_Right" type="Area2D" parent="."]
+position = Vector2(53, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detect_Area_Right"]
+position = Vector2(-26.375, 75.5)
+shape = SubResource("RectangleShape2D_3rlys")
+debug_color = Color(0.658824, 0.513726, 0, 0.419608)
+
+[node name="Top_Area" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top_Area"]
+position = Vector2(0, -1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_almlk")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_rp6xw")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(3, 0)
+rotation = 1.5708
+rotates = false
+loop = false
+
+[node name="Bat" type="Sprite2D" parent="Path2D/PathFollow2D"]
+visible = false
+rotation = 1.5708
+texture = ExtResource("2_6efcn")
+
+[node name="Floor_Raycast" type="RayCast2D" parent="."]
+target_position = Vector2(0, 22)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(4.8125, 1)
+
+[connection signal="body_entered" from="Detect_Area_Left" to="." method="_on_detect_area_left_body_entered"]
+[connection signal="body_entered" from="Detect_Area_Right" to="." method="_on_detect_area_right_body_entered"]
+[connection signal="area_entered" from="Top_Area" to="." method="_on_top_area_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

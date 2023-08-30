@@ -1,0 +1,172 @@
+[gd_scene load_steps=22 format=3 uid="uid://c3jtojq3stmul"]
+
+[ext_resource type="Script" path="res://Scripts/Title_Screen.gd" id="1_escrs"]
+[ext_resource type="Texture2D" uid="uid://eapkfn2tp77b" path="res://Scenes/TitleScreen/logo.png" id="2_ri15v"]
+[ext_resource type="FontFile" uid="uid://dyokshud62or5" path="res://Fonts/Old_Steel_9x12_b8.ttf" id="3_bqlg3"]
+[ext_resource type="Texture2D" uid="uid://da6k4howpreqm" path="res://Scenes/TitleScreen/play_focus1.png" id="4_y3ovj"]
+[ext_resource type="Texture2D" uid="uid://bsptw7vyubxfh" path="res://Scenes/TitleScreen/play_focus2.png" id="5_7ae0q"]
+[ext_resource type="Texture2D" uid="uid://bbkxnol3ko2bi" path="res://Scenes/TitleScreen/options_focus1.png" id="6_kqmgq"]
+[ext_resource type="Texture2D" uid="uid://cowwdogj1sbrb" path="res://Scenes/TitleScreen/options_focus2.png" id="7_5rcbd"]
+[ext_resource type="AudioStream" uid="uid://bsdf625iqkvmi" path="res://Sounds/Title_Music.wav" id="9_ykf7g"]
+[ext_resource type="AudioStream" uid="uid://b1jgu3yisu2cv" path="res://Sounds/select.wav" id="10_2qe5v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lg2ca"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wpmaw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_045w0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1ca3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lqp8q"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2mmqx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_y3ovj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_7ae0q")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g3gts"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_luby2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vq4wr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dh3xk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_517k8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eygs0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_kqmgq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_5rcbd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[node name="Title_Screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_escrs")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 240.0
+offset_bottom = 160.0
+color = Color(0, 0, 0, 1)
+
+[node name="Logo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.5
+offset_top = -61.0
+offset_right = 82.5
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.00104812
+texture = ExtResource("2_ri15v")
+
+[node name="Play_Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = 15.0
+offset_right = 19.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_top = NodePath("../Options_Button")
+focus_neighbor_bottom = NodePath("../Options_Button")
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("3_bqlg3")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxEmpty_lg2ca")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wpmaw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_045w0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_v1ca3")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lqp8q")
+button_mask = 0
+text = "PLAY"
+flat = true
+
+[node name="Play_Focus" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(100, 94)
+sprite_frames = SubResource("SpriteFrames_2mmqx")
+frame_progress = 0.771322
+centered = false
+
+[node name="Options_Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.5
+offset_top = 34.0
+offset_right = 26.5
+offset_bottom = 53.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_top = NodePath("../Play_Button")
+focus_neighbor_bottom = NodePath("../Play_Button")
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("3_bqlg3")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxEmpty_g3gts")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_luby2")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_vq4wr")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_dh3xk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_517k8")
+button_mask = 0
+text = "OPTIONS"
+flat = true
+
+[node name="Options_Focus" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(92, 113)
+sprite_frames = SubResource("SpriteFrames_eygs0")
+frame = 1
+frame_progress = 0.49174
+centered = false
+
+[node name="Title_Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_ykf7g")
+autoplay = true
+
+[node name="Focus_Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_2qe5v")
+volume_db = -8.0
+pitch_scale = 0.79
+
+[connection signal="focus_entered" from="Play_Button" to="." method="_on_play_button_focus_entered"]
+[connection signal="pressed" from="Play_Button" to="." method="_on_play_button_pressed"]
+[connection signal="focus_entered" from="Options_Button" to="." method="_on_options_button_focus_entered"]

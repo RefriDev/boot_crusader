@@ -1,0 +1,178 @@
+[gd_scene load_steps=12 format=3 uid="uid://dp3jdpiuitt5k"]
+
+[ext_resource type="Texture2D" uid="uid://d2hxtljbb7rkq" path="res://UI/hp_empty.png" id="1_i2k6i"]
+[ext_resource type="Script" path="res://UI/gui.gd" id="1_u7e4v"]
+[ext_resource type="Texture2D" uid="uid://kcm2vtdy502r" path="res://UI/hp.png" id="2_nrljo"]
+[ext_resource type="Texture2D" uid="uid://dmyq6hlsukury" path="res://UI/diamond_empty.png" id="3_egigo"]
+[ext_resource type="Texture2D" uid="uid://dtgrca1j3w2at" path="res://UI/diamond.png" id="4_nhbov"]
+[ext_resource type="Texture2D" uid="uid://oot0hno1feyt" path="res://UI/jumps.png" id="5_imwl1"]
+[ext_resource type="FontFile" uid="uid://bil5rf5h7u0ak" path="res://Fonts/BootNumbers.ttf" id="6_2pmwn"]
+[ext_resource type="Texture2D" uid="uid://bbqaj51u7pi4a" path="res://UI/Start.png" id="8_acme2"]
+
+[sub_resource type="Animation" id="Animation_xqp6v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Start:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Start:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(49, 63.5)]
+}
+
+[sub_resource type="Animation" id="Animation_0xwxd"]
+resource_name = "start"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Start:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Start:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.7, 1.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(49, 63.5), Vector2(49, -39)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_003u7"]
+_data = {
+"RESET": SubResource("Animation_xqp6v"),
+"start": SubResource("Animation_0xwxd")
+}
+
+[node name="GUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u7e4v")
+
+[node name="HP" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 16.0
+
+[node name="Empty_Hearts" type="TextureRect" parent="HP"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 40.0
+offset_bottom = 16.0
+texture = ExtResource("1_i2k6i")
+stretch_mode = 1
+
+[node name="Full_Hearts" type="TextureRect" parent="HP"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 28.0
+offset_bottom = 16.0
+texture = ExtResource("2_nrljo")
+stretch_mode = 1
+
+[node name="Gem" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 40.0
+offset_right = 53.0
+offset_bottom = 16.0
+
+[node name="Empty_Gem" type="TextureRect" parent="Gem"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 4.0
+offset_right = 13.0
+offset_bottom = 16.0
+texture = ExtResource("3_egigo")
+stretch_mode = 2
+
+[node name="Full_Gem" type="TextureRect" parent="Gem"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 4.0
+offset_right = 13.0
+offset_bottom = 16.0
+texture = ExtResource("4_nhbov")
+stretch_mode = 2
+
+[node name="Kills" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -42.0
+offset_bottom = 16.0
+grow_horizontal = 0
+
+[node name="Background" type="TextureRect" parent="Kills"]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 38.0
+offset_bottom = 16.0
+texture = ExtResource("5_imwl1")
+stretch_mode = 2
+
+[node name="Numbers" type="Label" parent="Kills"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 0
+offset_left = 1.0
+offset_top = 6.0
+offset_right = 18.0
+offset_bottom = 20.0
+theme_override_fonts/font = ExtResource("6_2pmwn")
+theme_override_font_sizes/font_size = 8
+text = "005"
+
+[node name="Start" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 49.0
+offset_top = 63.5
+offset_right = 191.0
+offset_bottom = 96.5001
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_acme2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_003u7")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

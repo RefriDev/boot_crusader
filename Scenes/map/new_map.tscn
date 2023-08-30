@@ -1,0 +1,165 @@
+[gd_scene load_steps=11 format=3 uid="uid://d3t2wim6t80e6"]
+
+[ext_resource type="Script" path="res://Scripts/Map.gd" id="1_nmux6"]
+[ext_resource type="Texture2D" uid="uid://b6m640336fjp5" path="res://Scenes/map/map_bg.png" id="2_0q13t"]
+[ext_resource type="Texture2D" uid="uid://cwxoljg0khm4k" path="res://Scenes/map/map_road.png" id="3_bpxai"]
+[ext_resource type="Texture2D" uid="uid://d2v486qr3ni4o" path="res://Scenes/map/map_player.png" id="4_7vksd"]
+[ext_resource type="Texture2D" uid="uid://bbnkgvicgnjd7" path="res://Scenes/map/map_lvl_done.png" id="5_3g1k8"]
+[ext_resource type="AudioStream" uid="uid://k67f0wlg03a6" path="res://Sounds/map_move.wav" id="6_fg4ue"]
+[ext_resource type="AudioStream" uid="uid://b20a14r3fjggg" path="res://Sounds/map_click.wav" id="7_5biht"]
+
+[sub_resource type="Animation" id="Animation_0lmn3"]
+resource_name = "enter_lvl_1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Levels/Lvl_1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(46, 127)]
+}
+
+[sub_resource type="Animation" id="Animation_lpgpj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Levels/Lvl_1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(46, 127)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y6ieb"]
+_data = {
+"RESET": SubResource("Animation_lpgpj"),
+"enter_lvl_1": SubResource("Animation_0lmn3")
+}
+
+[node name="new_map" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_nmux6")
+
+[node name="Map" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_0q13t")
+
+[node name="Road" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_bpxai")
+
+[node name="Levels" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Lvl_1" type="TextureRect" parent="Levels"]
+visible = false
+layout_mode = 0
+offset_left = 42.0
+offset_top = 123.0
+offset_right = 60.0
+offset_bottom = 141.0
+texture = ExtResource("5_3g1k8")
+
+[node name="Lvl_2" type="TextureRect" parent="Levels"]
+visible = false
+layout_mode = 0
+offset_left = 74.0
+offset_top = 71.0
+offset_right = 92.0
+offset_bottom = 89.0
+texture = ExtResource("5_3g1k8")
+
+[node name="Lvl_3" type="TextureRect" parent="Levels"]
+visible = false
+layout_mode = 0
+offset_left = 136.0
+offset_top = 100.0
+offset_right = 154.0
+offset_bottom = 118.0
+texture = ExtResource("5_3g1k8")
+
+[node name="Lvl_4" type="TextureRect" parent="Levels"]
+visible = false
+layout_mode = 0
+offset_left = 182.0
+offset_top = 56.0
+offset_right = 200.0
+offset_bottom = 74.0
+texture = ExtResource("5_3g1k8")
+
+[node name="Lvl_5" type="TextureRect" parent="Levels"]
+visible = false
+layout_mode = 0
+offset_left = 111.0
+offset_top = 15.0
+offset_right = 129.0
+offset_bottom = 33.0
+texture = ExtResource("5_3g1k8")
+
+[node name="Player" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 127.0
+offset_right = 56.0
+offset_bottom = 137.0
+texture = ExtResource("4_7vksd")
+stretch_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_y6ieb")
+}
+
+[node name="Enter_Level_Timer" type="Timer" parent="."]
+
+[node name="Click_Timer" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="Map_Move" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_fg4ue")
+
+[node name="Map_Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_5biht")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="Enter_Level_Timer" to="." method="_on_enter_level_timer_timeout"]
+[connection signal="timeout" from="Click_Timer" to="." method="_on_click_timer_timeout"]

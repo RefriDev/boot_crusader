@@ -1,0 +1,115 @@
+[gd_scene load_steps=11 format=3 uid="uid://d4krdtbchvmuf"]
+
+[ext_resource type="Texture2D" uid="uid://coo2lipx766hl" path="res://Enemies/spider1.png" id="1_c8o4l"]
+[ext_resource type="Script" path="res://Enemies/Spider/spider.gd" id="1_g776m"]
+[ext_resource type="Texture2D" uid="uid://dgx6f0211p35c" path="res://Enemies/spider2.png" id="2_nf2vc"]
+[ext_resource type="Texture2D" uid="uid://ctfwpq3n4rgru" path="res://Enemies/spider3.png" id="3_dmpxd"]
+[ext_resource type="Texture2D" uid="uid://b2n6e4ss8qs61" path="res://Enemies/spider4.png" id="4_fh2uq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jfod6"]
+radius = 196.092
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4yc4j"]
+radius = 5.0
+height = 20.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wha7u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_c8o4l")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_c8o4l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_nf2vc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_dmpxd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_fh2uq")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ya20t"]
+radius = 1.0
+height = 18.0
+
+[sub_resource type="Curve2D" id="Curve2D_cpr3n"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 3, 0, 0, 0, 0, 0, -1, -12, 0, 0, 0, 0, -9, -12, 0, 0, 0, 0, -12, -12, 0, 0, 0, 0, -20, -7, 0, 0, 0, 0, -22, 2, 0, 0, 0, 0, -25, 14, 0, 0, 0, 0, -28, 34, 0, 0, 0, 0, -32, 84, 0, 0, 0, 0, -33, 143)
+}
+point_count = 10
+
+[node name="Spider" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_g776m")
+MAX_SPEED = 50
+ACCELERATION = 25
+
+[node name="Activate_Area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Activate_Area"]
+visible = false
+shape = SubResource("CircleShape2D_jfod6")
+debug_color = Color(0.635294, 0.52549, 0, 0.419608)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4yc4j")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-18, -10)
+sprite_frames = SubResource("SpriteFrames_wha7u")
+animation = &"walk"
+frame_progress = 0.414187
+centered = false
+flip_h = true
+
+[node name="RayCast2D_Left" type="RayCast2D" parent="."]
+position = Vector2(-14, -4)
+target_position = Vector2(0, 18)
+
+[node name="RayCast2D_Right" type="RayCast2D" parent="."]
+position = Vector2(14, -4)
+target_position = Vector2(0, 18)
+
+[node name="Top_Area" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top_Area"]
+position = Vector2(0, -1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ya20t")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_cpr3n")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(3, 0)
+rotation = 1.5708
+rotates = false
+loop = false
+
+[node name="Spider" type="Sprite2D" parent="Path2D/PathFollow2D"]
+visible = false
+rotation = 1.5708
+texture = ExtResource("1_c8o4l")
+
+[connection signal="body_entered" from="Activate_Area" to="." method="_on_activate_area_body_entered"]
+[connection signal="body_exited" from="Activate_Area" to="." method="_on_activate_area_body_exited"]
+[connection signal="area_entered" from="Top_Area" to="." method="_on_top_area_area_entered"]
