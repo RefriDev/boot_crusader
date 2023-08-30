@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4dl4lsppwoon"
-path="res://.godot/imported/map_road.png-55c0477fb31a251be512bec011662b4e.ctex"
+uid="uid://35b1anfdwqp1"
+path="res://.godot/imported/map_levels.png-b12925972d1f42d12f00885057d249b4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/map/map_road.png"
-dest_files=["res://.godot/imported/map_road.png-55c0477fb31a251be512bec011662b4e.ctex"]
+source_file="res://Scenes/map/map_levels.png"
+dest_files=["res://.godot/imported/map_levels.png-b12925972d1f42d12f00885057d249b4.ctex"]
 
 [params]
 

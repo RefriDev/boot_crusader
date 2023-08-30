@@ -6,6 +6,7 @@ extends Control
 @onready var map_move_sound := $Map_Move
 @onready var map_click_sound := $Map_Click
 @onready var map_click_timer := $Click_Timer
+@onready var begin_timer := $Begin_Timer
 
 @onready var lvl1 := $Levels/Lvl_1
 @onready var lvl2 := $Levels/Lvl_2
@@ -13,34 +14,50 @@ extends Control
 @onready var lvl4 := $Levels/Lvl_4
 @onready var lvl5 := $Levels/Lvl_5
 
+@onready var dots := $Dots
+@onready var road := $Road
+@onready var player := $Player
+
 var timer_timeout := false
 
 var counter := 0
+var begin_counter := 0
 
 func _ready() -> void:
-	
-	if Global.new_game == true:
-		pass
-	
-	map_move_sound.play()
 	timer.set_wait_time(3)
 	
 	if Global.lvl_on == 1:
-		animations.play("enter_lvl_1")
-		map_click_sound.pitch_scale = 0.1
-		map_click_sound.play()
+		animations.play("begin")
+		begin_timer.start()
+		
 	if Global.lvl_on == 2:
+		dots.visible = true
+		road.visible = true
+		player.visible = true
 		animations.play("move_lvl_2")
 		map_click_timer.start()
+		map_move_sound.play()
 	if Global.lvl_on == 3:
+		dots.visible = true
+		road.visible = true
+		player.visible = true
 		animations.play("move_lvl_3")
 		map_click_timer.start()
+		map_move_sound.play()
 	if Global.lvl_on == 4:
+		dots.visible = true
+		road.visible = true
+		player.visible = true
 		animations.play("move_lvl_4")
 		map_click_timer.start()
+		map_move_sound.play()
 	if Global.lvl_on == 5:
+		dots.visible = true
+		road.visible = true
+		player.visible = true
 		animations.play("move_lvl_5")
 		map_click_timer.start()
+		map_move_sound.play()
 	
 	if Global.lvl_completed[0] == true:
 		lvl1.visible = true
@@ -54,6 +71,11 @@ func _ready() -> void:
 		lvl5.visible = true
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "begin":
+		animations.play("enter_lvl_1")
+		map_click_sound.pitch_scale = 0.1
+		map_click_sound.play()
+		timer.start()
 	if anim_name == "move_lvl_2":
 		map_click_timer.queue_free()
 		map_click_sound.pitch_scale = 0.1
@@ -114,3 +136,13 @@ func _on_click_timer_timeout() -> void:
 	map_click_timer.stop()
 	map_click_timer.set_wait_time(0.3)
 	map_click_timer.start()
+
+
+func _on_begin_timer_timeout() -> void:
+	if begin_counter <= 2:
+		map_click_sound.pitch_scale = 0.1
+		map_click_sound.play()
+		begin_timer.stop()
+		begin_timer.set_wait_time(0.6)
+		begin_timer.start()
+		begin_counter += 1
