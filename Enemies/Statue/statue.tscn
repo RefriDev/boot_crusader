@@ -1,0 +1,210 @@
+[gd_scene load_steps=11 format=3 uid="uid://dbdj8hkl54llb"]
+
+[ext_resource type="Script" path="res://Enemies/Statue/statue.gd" id="1_3agq8"]
+[ext_resource type="Texture2D" uid="uid://dvyjkd1vu1gqu" path="res://Enemies/Statue/statue_enemy1.png" id="2_kpn3i"]
+[ext_resource type="Texture2D" uid="uid://dvtoptsinhthx" path="res://Enemies/Statue/statue_enemy2.png" id="3_yi3fu"]
+[ext_resource type="Texture2D" uid="uid://cyexdnd1xpn43" path="res://Enemies/Statue/statue_enemy3.png" id="4_yokrh"]
+[ext_resource type="Texture2D" uid="uid://cqa6j5urtlsaj" path="res://Enemies/Statue/statue_enemy4.png" id="5_cikda"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s8fwk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_kpn3i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yi3fu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_yokrh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_kpn3i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yi3fu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_yokrh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_kpn3i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yi3fu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_yokrh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_cikda")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_kpn3i")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j166m"]
+radius = 1.0
+height = 18.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f7pqc"]
+size = Vector2(24, 24)
+
+[sub_resource type="Curve2D" id="Curve2D_xcv0i"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 3, 0, 0, 0, 0, 0, -1, -12, 0, 0, 0, 0, -9, -12, 0, 0, 0, 0, -12, -12, 0, 0, 0, 0, -20, -7, 0, 0, 0, 0, -22, 2, 0, 0, 0, 0, -25, 14, 0, 0, 0, 0, -28, 34, 0, 0, 0, 0, -32, 84, 0, 0, 0, 0, -33, 143)
+}
+point_count = 10
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_btjbi"]
+radius = 64.0
+
+[node name="Statue" type="CharacterBody2D"]
+position = Vector2(-2, 0)
+collision_layer = 4
+script = ExtResource("1_3agq8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_s8fwk")
+animation = &"attack"
+
+[node name="Top_Area" type="Area2D" parent="."]
+position = Vector2(2, 8.5)
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top_Area"]
+position = Vector2(0, -15.5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_j166m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 7)
+shape = SubResource("RectangleShape2D_f7pqc")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_xcv0i")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(3, 0)
+rotation = 1.5708
+rotates = false
+loop = false
+
+[node name="Statue" type="Sprite2D" parent="Path2D/PathFollow2D"]
+visible = false
+rotation = 1.5708
+texture = ExtResource("2_kpn3i")
+
+[node name="Activate_Area" type="Area2D" parent="."]
+position = Vector2(2, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Activate_Area"]
+shape = SubResource("CircleShape2D_btjbi")
+debug_color = Color(0.670588, 0.509804, 0, 0.419608)
+
+[node name="Rise_Timer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="Top_Area" to="." method="_on_top_area_area_entered"]
+[connection signal="body_entered" from="Activate_Area" to="." method="_on_activate_area_body_entered"]
+[connection signal="timeout" from="Rise_Timer" to="." method="_on_rise_timer_timeout"]
