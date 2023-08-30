@@ -7,11 +7,21 @@ extends Control
 @onready var map_click_sound := $Map_Click
 @onready var map_click_timer := $Click_Timer
 
+@onready var lvl1 := $Levels/Lvl_1
+@onready var lvl2 := $Levels/Lvl_2
+@onready var lvl3 := $Levels/Lvl_3
+@onready var lvl4 := $Levels/Lvl_4
+@onready var lvl5 := $Levels/Lvl_5
+
 var timer_timeout := false
 
 var counter := 0
 
 func _ready() -> void:
+	
+	if Global.new_game == true:
+		pass
+	
 	map_move_sound.play()
 	timer.set_wait_time(3)
 	
@@ -31,7 +41,17 @@ func _ready() -> void:
 	if Global.lvl_on == 5:
 		animations.play("move_lvl_5")
 		map_click_timer.start()
-		
+	
+	if Global.lvl_completed[0] == true:
+		lvl1.visible = true
+	if Global.lvl_completed[1] == true:
+		lvl2.visible = true
+	if Global.lvl_completed[2] == true:
+		lvl3.visible = true
+	if Global.lvl_completed[3] == true:
+		lvl4.visible = true
+	if Global.lvl_completed[4] == true:
+		lvl5.visible = true
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "move_lvl_2":
