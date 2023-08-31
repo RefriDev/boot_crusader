@@ -1,10 +1,90 @@
-[gd_scene load_steps=5 format=3 uid="uid://db4t2gqmtku5j"]
+[gd_scene load_steps=15 format=3 uid="uid://db4t2gqmtku5j"]
 
 [ext_resource type="Texture2D" uid="uid://k7p3384rx1e0" path="res://Enemies/Boss/boss2.png" id="1_0vlk4"]
 [ext_resource type="Script" path="res://Enemies/Boss/boss.gd" id="1_c3fnw"]
 [ext_resource type="Texture2D" uid="uid://djyshar7bnik1" path="res://Enemies/Boss/boss.png" id="2_5aumj"]
+[ext_resource type="AudioStream" uid="uid://dwv4besfva3mk" path="res://Sounds/boss.mp3" id="4_83i34"]
+[ext_resource type="FontFile" uid="uid://dyokshud62or5" path="res://Fonts/Old_Steel_9x12_b8.ttf" id="4_mjmb1"]
+[ext_resource type="AudioStream" uid="uid://ddhkuojc5cfgi" path="res://Sounds/heartbeat.wav" id="6_rvoa1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3oehx"]
+radius = 1.0
+height = 40.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5gk41"]
+
+[sub_resource type="Animation" id="Animation_2auqq"]
+resource_name = "fall"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Boss:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -60), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tj6fl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Boss:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -60)]
+}
+
+[sub_resource type="Animation" id="Animation_mvgni"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Boss:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -60)]
+}
+
+[sub_resource type="Animation" id="Animation_i7j3y"]
+resource_name = "up"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Boss:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -60)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qc6x8"]
+_data = {
+"RESET": SubResource("Animation_tj6fl"),
+"fall": SubResource("Animation_2auqq"),
+"idle": SubResource("Animation_mvgni"),
+"up": SubResource("Animation_i7j3y")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_53rlb"]
+size = Vector2(138, 37.5)
 
 [node name="Boss" type="CharacterBody2D"]
 collision_layer = 0
@@ -23,12 +103,68 @@ texture = ExtResource("1_0vlk4")
 position = Vector2(0, -60)
 texture = ExtResource("2_5aumj")
 
+[node name="Top_Area" type="Area2D" parent="."]
+position = Vector2(0, 1)
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top_Area"]
+position = Vector2(0, -10)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_3oehx")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5gk41")
 
 [node name="Spawn_Timer_Left" type="Timer" parent="."]
+wait_time = 3.0
 
 [node name="Spawn_Timer_Right" type="Timer" parent="."]
+wait_time = 3.0
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qc6x8")
+}
+
+[node name="Down_Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="Boss_Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_83i34")
+bus = &"Music"
+
+[node name="Label" type="Label" parent="."]
+offset_left = -21.0
+offset_top = -60.0
+offset_right = 20.0
+offset_bottom = -34.0
+theme_override_fonts/font = ExtResource("4_mjmb1")
+text = "
+"
+horizontal_alignment = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -143)
+shape = SubResource("RectangleShape2D_53rlb")
+
+[node name="HeartBeat_Timer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="HeartBeat_Timer2" type="Timer" parent="."]
+
+[node name="HeartBeat_Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_rvoa1")
+
+[connection signal="area_entered" from="Top_Area" to="." method="_on_top_area_area_entered"]
 [connection signal="timeout" from="Spawn_Timer_Left" to="." method="_on_spawn_timer_left_timeout"]
 [connection signal="timeout" from="Spawn_Timer_Right" to="." method="_on_spawn_timer_right_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="Down_Timer" to="." method="_on_down_timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="HeartBeat_Timer" to="." method="_on_heart_beat_timer_timeout"]
+[connection signal="timeout" from="HeartBeat_Timer2" to="." method="_on_heart_beat_timer_2_timeout"]

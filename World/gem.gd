@@ -23,6 +23,8 @@ func _on_body_entered(body: Node2D) -> void:
 		if gem_number == 5:
 			Global.gem5 = true
 		
+		Global.gems += 1
+		
 		collect_sound.play()
 		visible = false
 

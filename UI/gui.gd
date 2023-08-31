@@ -85,7 +85,9 @@ func _on_retry_button_pressed() -> void:
 	Global.dead = false
 	if Global.gem == true:
 		Global.gem = false
+		Global.gems -= 1
 	
+	Global.round = false
 	Global.health = 3
 	Global.boot_points = Global.start_boot_points
 	
@@ -96,6 +98,7 @@ func _on_quit_button_pressed() -> void:
 	Global.dead = false
 	if Global.gem == true:
 		Global.gem = false
+		Global.gems -= 1
 	
 	Global.health = 3
 	Global.boot_points = Global.start_boot_points

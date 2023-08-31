@@ -68,6 +68,7 @@ direction = "left"
 
 [node name="Gem" parent="." instance=ExtResource("7_0sc7w")]
 position = Vector2(656, 855)
+gem_number = 3
 
 [node name="Bat" parent="." instance=ExtResource("8_qmu52")]
 position = Vector2(-224, 743)
