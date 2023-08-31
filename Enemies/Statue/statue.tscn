@@ -146,7 +146,7 @@ radius = 1.0
 height = 18.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f7pqc"]
-size = Vector2(24, 24)
+size = Vector2(24, 20)
 
 [sub_resource type="Curve2D" id="Curve2D_xcv0i"]
 _data = {
@@ -177,7 +177,7 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_j166m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, 7)
+position = Vector2(2, 9)
 shape = SubResource("RectangleShape2D_f7pqc")
 
 [node name="Path2D" type="Path2D" parent="."]

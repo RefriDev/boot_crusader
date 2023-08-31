@@ -10,7 +10,7 @@
 radius = 196.092
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4yc4j"]
-radius = 5.0
+radius = 2.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wha7u"]
 animations = [{
@@ -42,7 +42,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ya20t"]
 radius = 1.0
-height = 24.0
+height = 18.0
 
 [sub_resource type="Curve2D" id="Curve2D_cpr3n"]
 _data = {
@@ -65,7 +65,7 @@ shape = SubResource("CircleShape2D_jfod6")
 debug_color = Color(0.635294, 0.52549, 0, 0.419608)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 6)
+position = Vector2(0, 9)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_4yc4j")
 

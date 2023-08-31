@@ -169,6 +169,7 @@ pitch_scale = 0.79
 bus = &"Sfx"
 
 [node name="Options" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

@@ -110,22 +110,22 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		counter += 1
 		animations.play("enter_lvl_2")
 		if counter >= 3:
-			get_tree().change_scene_to_file("res://Scenes/Levels/Level_1.tscn")
+			get_tree().change_scene_to_file("res://Scenes/Levels/Level_2.tscn")
 	if anim_name == "enter_lvl_3":
 		counter += 1
 		animations.play("enter_lvl_3")
 		if counter >= 3:
-			get_tree().change_scene_to_file("res://Scenes/Levels/Level_1.tscn")
+			get_tree().change_scene_to_file("res://Scenes/Levels/Level_3.tscn")
 	if anim_name == "enter_lvl_4":
 		counter += 1
 		animations.play("enter_lvl_4")
 		if counter >= 3:
-			get_tree().change_scene_to_file("res://Scenes/Levels/Level_1.tscn")
+			get_tree().change_scene_to_file("res://Scenes/Levels/Level_4.tscn")
 	if anim_name == "enter_lvl_5":
 		counter += 1
 		animations.play("enter_lvl_5")
 		if counter >= 3:
-			get_tree().change_scene_to_file("res://Scenes/Levels/Level_1.tscn")
+			get_tree().change_scene_to_file("res://Scenes/Levels/Level_5.tscn")
 
 func _on_enter_level_timer_timeout() -> void:
 	timer_timeout = true

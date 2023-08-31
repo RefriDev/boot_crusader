@@ -33,7 +33,9 @@ func _ready() -> void:
 	animation.play("idle")
 
 func _physics_process(delta: float) -> void:
+	
 	if dead == true:
+		can_move = false
 		death(delta)
 		if add_point == true:
 			Global.boot_points += 1
