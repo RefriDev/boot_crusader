@@ -9,10 +9,12 @@ extends CharacterBody2D
 @onready var statue := $Path2D/PathFollow2D/Statue
 @onready var top_col := $Top_Area/CollisionShape2D
 @onready var col := $CollisionShape2D
+@onready var activate_col := $Activate_Area/CollisionShape2D
 @onready var path := $Path2D/PathFollow2D
 @onready var player := get_parent().get_node("Player")
 
 @onready var rise_timer := $Rise_Timer
+@onready var reset_timer := $Reset_Timer
 
 var can_move := false
 var t := 0.0
@@ -22,8 +24,11 @@ var add_point := true
 var is_attacking := false
 var is_falling := false
 var is_flying := false
+var begin_fall := false
 
 func _ready() -> void:
+	can_move = true
+	is_falling = true
 	statue.visible = false
 	animation.play("idle")
 
@@ -41,6 +46,9 @@ func _physics_process(delta: float) -> void:
 			if animation.frame == 9:
 				velocity.y -= RISE_ACC
 				rise_timer.start()
+				reset_timer.start()
+				activate_col.set_deferred("disabled", true)
+				
 				
 		
 		if is_flying == true:
@@ -94,3 +102,7 @@ func _on_rise_timer_timeout() -> void:
 	rise_timer.stop()
 	is_attacking = false
 	is_flying = true
+
+
+func _on_reset_timer_timeout() -> void:
+	activate_col.set_deferred("disabled", false)

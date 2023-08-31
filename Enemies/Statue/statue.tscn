@@ -205,6 +205,10 @@ debug_color = Color(0.670588, 0.509804, 0, 0.419608)
 
 [node name="Rise_Timer" type="Timer" parent="."]
 
+[node name="Reset_Timer" type="Timer" parent="."]
+wait_time = 2.0
+
 [connection signal="area_entered" from="Top_Area" to="." method="_on_top_area_area_entered"]
 [connection signal="body_entered" from="Activate_Area" to="." method="_on_activate_area_body_entered"]
 [connection signal="timeout" from="Rise_Timer" to="." method="_on_rise_timer_timeout"]
+[connection signal="timeout" from="Reset_Timer" to="." method="_on_reset_timer_timeout"]

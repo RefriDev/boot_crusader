@@ -41,11 +41,11 @@ radius = 7.0
 height = 32.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3rlys"]
-size = Vector2(52.75, 171)
+size = Vector2(52.75, 89.5)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_almlk"]
 radius = 1.0
-height = 18.0
+height = 28.0
 
 [sub_resource type="Curve2D" id="Curve2D_rp6xw"]
 _data = {
@@ -72,7 +72,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detect_Area_Left"]
-position = Vector2(-26.375, 75.5)
+position = Vector2(-26.375, 35.25)
 shape = SubResource("RectangleShape2D_3rlys")
 debug_color = Color(0.658824, 0.513726, 0, 0.419608)
 
@@ -82,7 +82,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detect_Area_Right"]
-position = Vector2(-26.375, 75.5)
+position = Vector2(-27, 35)
 shape = SubResource("RectangleShape2D_3rlys")
 debug_color = Color(0.658824, 0.513726, 0, 0.419608)
 
