@@ -28,6 +28,7 @@ extends CharacterBody2D
 @onready var jump_gravity : float = ((-2.0 * JUMP_HEIGHT) / (JUMP_TIME_TO_PEAK * JUMP_TIME_TO_PEAK)) * -1.0
 @onready var fall_gravity : float = ((-2.0 * JUMP_HEIGHT) / (JUMP_TIME_TO_PEAK * JUMP_TIME_TO_DECENT)) * -1.0
 
+@onready var blink := $AnimationPlayer
 @onready var animation := $AnimatedSprite2D
 @onready var effect_anchor := $Effect_Anchor
 @onready var walk_effect := $Effect_Anchor/Walk_Effect
@@ -38,7 +39,7 @@ extends CharacterBody2D
 @onready var hit_sound := $Hit_Sound
 @onready var stomp_sound := $Stomp_Sound
 @onready var start_timer := $Start_Timer
-
+@onready var inv_timer := $Invulnerability_Timer
 @onready var camera := $Camera2D
 
 var jump_counter : int = 0
@@ -49,12 +50,16 @@ var direction := "right"
 var in_air := false
 var can_move := false
 
+var invulnerable := false
 var knockback := Vector2.ZERO
 
 func get_gravity() -> float:
 	return jump_gravity if velocity.y < 0.0 else fall_gravity
 
 func _physics_process(delta: float) -> void:
+	
+	if invulnerable == true:
+		blink.play("blink")
 	
 	if can_move == true:
 	
@@ -146,19 +151,23 @@ func _on_start_timer_timeout() -> void:
 func _on_hitbox_body_entered(_body: Node2D) -> void:
 	
 	take_damage(Vector2(300,-200))
-	
-	if Global.health <= 0:
-		can_move = false
-		Global.dead = true
 
 func take_damage(knockback_force := Vector2.ZERO, duration := 0.25):
-	hit_sound.play()
-	Global.health -= 1
-	if knockback_force != Vector2.ZERO:
-		knockback = knockback_force
+	if invulnerable == false:
+		invulnerable = true
+		inv_timer.start()
+		hit_sound.play()
+		Global.health -= 1
+		if knockback_force != Vector2.ZERO:
+			knockback = knockback_force
+			var knock_tween = get_tree().create_tween()
+			knock_tween.tween_property(self, "knockback", Vector2.ZERO, duration)
+		if Global.health <= 0:
+			jump_sound.volume_db = -80
+			stomp_sound.volume_db = -80
+			can_move = false
+			Global.dead = true
 		
-		var knock_tween = get_tree().create_tween()
-		knock_tween.tween_property(self, "knockback", Vector2.ZERO, duration)
 
 func _on_boots_area_entered(_area: Area2D) -> void:
 	stomp_sound.play()
@@ -167,6 +176,13 @@ func _on_boots_area_entered(_area: Area2D) -> void:
 
 func _on_hitbox_right_body_entered(_body: Node2D) -> void:
 	take_damage(Vector2(-300,-200))
-	
-	if Global.health <= 0:
-		print("dead")
+
+
+
+func _on_invulnerability_timer_timeout() -> void:
+	inv_timer.stop()
+	if invulnerable == true:
+		invulnerable = false
+		blink.play("RESET")
+		if can_move == false:
+			hit_sound.volume_db = -80

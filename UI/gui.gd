@@ -13,6 +13,15 @@ extends Control
 @onready var quit_button := $DeathScreen/Quit_Button
 @onready var quit_focus := $DeathScreen/Quit_Focus
 
+@onready var bonk_sound := $Bonk_Sound
+@onready var death_sound := $Death_Sound
+@onready var bonk_timer := $DeathScreen/Bonk_Timer
+@onready var focus_sound := $Focus_Sound
+
+@onready var music := get_parent().get_parent().get_node("Music")
+
+var play_once := false
+
 var heart_size := 12
 var death_end := false
 
@@ -20,6 +29,8 @@ func _ready() -> void:
 	death_screen.visible = false
 	gem.visible = false
 	animation.play("start")
+	retry_focus.play("default")
+	quit_focus.play("default")
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "start":
@@ -32,6 +43,11 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func _process(_delta: float) -> void:
 	
 	if Global.dead == true:
+		if play_once == false:
+			music.stop()
+			death_sound.play()
+			bonk_timer.start()
+			play_once = true
 		if death_end == false:
 			death_screen.visible = true
 			animation.play("death")
@@ -39,7 +55,7 @@ func _process(_delta: float) -> void:
 	
 	full_hearts.size.x = heart_size * Global.health
 	
-	if Global.health == 0:
+	if Global.health <= 0:
 		full_hearts.scale.x = 0
 	
 	if Global.gem == true:
@@ -54,10 +70,12 @@ func _process(_delta: float) -> void:
 
 
 func _on_retry_button_focus_entered() -> void:
+	focus_sound.play()
 	retry_focus.visible = true
 	quit_focus.visible = false
 
 func _on_quit_button_focus_entered() -> void:
+	focus_sound.play()
 	retry_focus.visible = false
 	quit_focus.visible = true
 
@@ -68,10 +86,22 @@ func _on_retry_button_pressed() -> void:
 	if Global.gem == true:
 		Global.gem = false
 	
+	Global.health = 3
 	Global.boot_points = Global.start_boot_points
 	
 	get_tree().change_scene_to_file("res://Scenes/map/new_map.tscn")
 
 
 func _on_quit_button_pressed() -> void:
+	Global.dead = false
+	if Global.gem == true:
+		Global.gem = false
+	
+	Global.health = 3
+	Global.boot_points = Global.start_boot_points
 	get_tree().change_scene_to_file("res://Scenes/TitleScreen/title_screen.tscn")
+
+
+func _on_bonk_timer_timeout() -> void:
+	bonk_timer.stop()
+	bonk_sound.play()

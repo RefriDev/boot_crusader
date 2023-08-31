@@ -5,7 +5,9 @@ extends CharacterBody2D
 
 @onready var animation := $AnimatedSprite2D
 @onready var raycast_left := $RayCast2D_Left
+@onready var raycast_left2 := $RayCast2D_Left2
 @onready var raycast_right := $RayCast2D_Right
+@onready var raycast_right2 := $RayCast2D_Right2
 @onready var top_col := $Top_Area/CollisionShape2D
 @onready var col := $CollisionShape2D
 @onready var path := $Path2D/PathFollow2D
@@ -36,12 +38,12 @@ func _physics_process(delta: float) -> void:
 		if not is_on_floor():
 			velocity.y += gravity * delta
 	
-		if not raycast_left.is_colliding():
+		if not raycast_left.is_colliding() or raycast_left2.is_colliding():
 			direction = "right"
 	
-		if not raycast_right.is_colliding():
+		if not raycast_right.is_colliding() or raycast_right2.is_colliding():
 			direction = "left"
-	
+		
 		if direction == "right":
 			animation.flip_h = false
 			velocity.x += ACCELERATION

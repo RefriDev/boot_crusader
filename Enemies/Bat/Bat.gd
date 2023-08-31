@@ -5,6 +5,10 @@ extends CharacterBody2D
 @export var FALL : int = 10
 @export var MAX_FALL : = 150
 
+@onready var raycast_left2 := $RayCast2D_Left2
+@onready var raycast_right2 := $RayCast2D_Right2
+@onready var raycast_left := $RayCast2D_Left
+@onready var raycast_right := $RayCast2D_Right
 @onready var animation := $AnimatedSprite2D
 @onready var top_col := $Top_Area/CollisionShape2D
 @onready var col := $CollisionShape2D
@@ -34,6 +38,8 @@ func _physics_process(delta: float) -> void:
 			Global.boot_points += 1
 			add_point = false
 	if can_move == true:
+		
+		
 		if is_falling == true:
 			animation.play("fall")
 			velocity.y += FALL
@@ -45,6 +51,11 @@ func _physics_process(delta: float) -> void:
 		if is_flying == true:
 			animation.play("fly")
 			velocity.y = 0
+			if raycast_left2.is_colliding() or raycast_left.is_colliding():
+				direction = "right"
+	
+			if raycast_right2.is_colliding() or raycast_right.is_colliding():
+				direction = "left"
 		
 			if direction == "right":
 				animation.flip_h = true

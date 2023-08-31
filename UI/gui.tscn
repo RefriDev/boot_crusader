@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dp3jdpiuitt5k"]
+[gd_scene load_steps=29 format=3 uid="uid://dp3jdpiuitt5k"]
 
 [ext_resource type="Texture2D" uid="uid://d2hxtljbb7rkq" path="res://UI/hp_empty.png" id="1_i2k6i"]
 [ext_resource type="Script" path="res://UI/gui.gd" id="1_u7e4v"]
@@ -9,11 +9,14 @@
 [ext_resource type="FontFile" uid="uid://bil5rf5h7u0ak" path="res://Fonts/BootNumbers.ttf" id="6_2pmwn"]
 [ext_resource type="Texture2D" uid="uid://bbqaj51u7pi4a" path="res://UI/Start.png" id="8_acme2"]
 [ext_resource type="Texture2D" uid="uid://ct6lxybn4hpyy" path="res://UI/dead.png" id="9_nskga"]
+[ext_resource type="AudioStream" uid="uid://b1jgu3yisu2cv" path="res://Sounds/select.wav" id="10_ouu2r"]
 [ext_resource type="FontFile" uid="uid://dyokshud62or5" path="res://Fonts/Old_Steel_9x12_b8.ttf" id="10_qrek1"]
 [ext_resource type="Texture2D" uid="uid://bbkxnol3ko2bi" path="res://Scenes/TitleScreen/options_focus1.png" id="11_nm8mt"]
 [ext_resource type="Texture2D" uid="uid://cowwdogj1sbrb" path="res://Scenes/TitleScreen/options_focus2.png" id="12_s23qh"]
 [ext_resource type="Texture2D" uid="uid://da6k4howpreqm" path="res://Scenes/TitleScreen/play_focus1.png" id="13_smm4i"]
 [ext_resource type="Texture2D" uid="uid://bsptw7vyubxfh" path="res://Scenes/TitleScreen/play_focus2.png" id="14_r3pm6"]
+[ext_resource type="AudioStream" uid="uid://dyrefshgo1b8f" path="res://Sounds/death.wav" id="15_e4i2g"]
+[ext_resource type="AudioStream" uid="uid://k67f0wlg03a6" path="res://Sounds/map_move.wav" id="16_fwqdk"]
 
 [sub_resource type="Animation" id="Animation_xqp6v"]
 length = 0.001
@@ -90,34 +93,6 @@ tracks/5/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_0xwxd"]
-resource_name = "start"
-length = 4.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Start:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [false, true, false, true, false, true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Start:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.7, 1.9),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(49, 63.5), Vector2(49, -39)]
-}
-
 [sub_resource type="Animation" id="Animation_e6dnm"]
 resource_name = "death"
 length = 2.0
@@ -168,6 +143,34 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_0xwxd"]
+resource_name = "start"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Start:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Start:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.7, 1.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(49, 63.5), Vector2(49, -39)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_003u7"]
@@ -307,10 +310,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -71.0
-offset_top = -16.5
-offset_right = 71.0
-offset_bottom = 16.5001
+offset_left = 49.0
+offset_top = 63.5
+offset_right = 191.0
+offset_bottom = 96.5001
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("8_acme2")
@@ -319,6 +322,19 @@ texture = ExtResource("8_acme2")
 libraries = {
 "": SubResource("AnimationLibrary_003u7")
 }
+
+[node name="Bonk_Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_e4i2g")
+bus = &"Sfx"
+
+[node name="Focus_Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_ouu2r")
+volume_db = -8.0
+bus = &"Sfx"
+
+[node name="Death_Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_fwqdk")
+bus = &"Sfx"
 
 [node name="DeathScreen" type="Control" parent="."]
 anchors_preset = 0
@@ -339,9 +355,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -57.5
-offset_top = -16.5
+offset_top = -40.0
 offset_right = 57.5
-offset_bottom = 16.5
+offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("9_nskga")
@@ -353,10 +369,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -19.0
-offset_top = 28.0
-offset_right = 19.0
-offset_bottom = 47.0
+offset_left = -19.5
+offset_top = 11.0
+offset_right = 19.5
+offset_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_neighbor_top = NodePath("../Quit_Button")
@@ -375,10 +391,10 @@ flat = true
 
 [node name="Retry_Focus" type="AnimatedSprite2D" parent="DeathScreen"]
 visible = false
-position = Vector2(95, 107)
+position = Vector2(95, 90)
 scale = Vector2(0.892857, 1)
 sprite_frames = SubResource("SpriteFrames_julgl")
-frame_progress = 0.659284
+frame_progress = 0.289042
 centered = false
 
 [node name="Quit_Button" type="Button" parent="DeathScreen"]
@@ -388,10 +404,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -19.0
-offset_top = 45.0
-offset_right = 19.0
-offset_bottom = 64.0
+offset_left = -18.0
+offset_top = 28.0
+offset_right = 20.0
+offset_bottom = 47.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_neighbor_top = NodePath("../Retry_Button")
@@ -405,19 +421,22 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_uicc2")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_8ow5v")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_f2kp2")
 button_mask = 0
-text = "QUIT"
+text = "MENU "
 flat = true
 
 [node name="Quit_Focus" type="AnimatedSprite2D" parent="DeathScreen"]
 visible = false
-position = Vector2(100, 124)
+position = Vector2(100, 107)
 sprite_frames = SubResource("SpriteFrames_xjmmj")
-frame = 1
-frame_progress = 0.425283
+frame_progress = 0.0706116
 centered = false
+
+[node name="Bonk_Timer" type="Timer" parent="DeathScreen"]
+wait_time = 0.8
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="focus_entered" from="DeathScreen/Retry_Button" to="." method="_on_retry_button_focus_entered"]
 [connection signal="pressed" from="DeathScreen/Retry_Button" to="." method="_on_retry_button_pressed"]
 [connection signal="focus_entered" from="DeathScreen/Quit_Button" to="." method="_on_quit_button_focus_entered"]
 [connection signal="pressed" from="DeathScreen/Quit_Button" to="." method="_on_quit_button_pressed"]
+[connection signal="timeout" from="DeathScreen/Bonk_Timer" to="." method="_on_bonk_timer_timeout"]

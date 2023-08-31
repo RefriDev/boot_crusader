@@ -64,6 +64,7 @@ libraries = {
 
 [node name="Collect_Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_xoow2")
+bus = &"Sfx"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="finished" from="Collect_Sound" to="." method="_on_collect_sound_finished"]

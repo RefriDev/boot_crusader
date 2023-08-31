@@ -112,6 +112,22 @@ texture = ExtResource("2_6efcn")
 [node name="Floor_Raycast" type="RayCast2D" parent="."]
 target_position = Vector2(0, 22)
 
+[node name="RayCast2D_Left2" type="RayCast2D" parent="."]
+position = Vector2(-17, 5)
+target_position = Vector2(-8, 0)
+
+[node name="RayCast2D_Left" type="RayCast2D" parent="."]
+position = Vector2(-17, 12)
+target_position = Vector2(-8, 0)
+
+[node name="RayCast2D_Right2" type="RayCast2D" parent="."]
+position = Vector2(17, 5)
+target_position = Vector2(8, 0)
+
+[node name="RayCast2D_Right" type="RayCast2D" parent="."]
+position = Vector2(17, 12)
+target_position = Vector2(8, 0)
+
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 scale = Vector2(4.8125, 1)
 

@@ -11,7 +11,6 @@ radius = 196.092
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4yc4j"]
 radius = 5.0
-height = 20.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wha7u"]
 animations = [{
@@ -43,7 +42,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ya20t"]
 radius = 1.0
-height = 18.0
+height = 24.0
 
 [sub_resource type="Curve2D" id="Curve2D_cpr3n"]
 _data = {
@@ -62,7 +61,6 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Activate_Area"]
-visible = false
 shape = SubResource("CircleShape2D_jfod6")
 debug_color = Color(0.635294, 0.52549, 0, 0.419608)
 
@@ -83,9 +81,17 @@ flip_h = true
 position = Vector2(-14, -4)
 target_position = Vector2(0, 18)
 
+[node name="RayCast2D_Left2" type="RayCast2D" parent="."]
+position = Vector2(-14, 1)
+target_position = Vector2(-8, 0)
+
 [node name="RayCast2D_Right" type="RayCast2D" parent="."]
 position = Vector2(14, -4)
 target_position = Vector2(0, 18)
+
+[node name="RayCast2D_Right2" type="RayCast2D" parent="."]
+position = Vector2(14, 1)
+target_position = Vector2(8, 0)
 
 [node name="Top_Area" type="Area2D" parent="."]
 collision_layer = 16

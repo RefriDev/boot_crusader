@@ -160,12 +160,97 @@ centered = false
 [node name="Title_Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_ykf7g")
 autoplay = true
+bus = &"Music"
 
 [node name="Focus_Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_2qe5v")
 volume_db = -8.0
 pitch_scale = 0.79
+bus = &"Sfx"
+
+[node name="Options" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="Options"]
+layout_mode = 0
+offset_left = -100.0
+offset_top = -31.0
+offset_right = 140.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 1)
+
+[node name="Back_Button" type="Button" parent="Options"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 64.0
+offset_top = -3.0
+offset_right = 117.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_top = NodePath("../Mater/HSlider")
+focus_neighbor_bottom = NodePath("../Mater/HSlider")
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("3_bqlg3")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxEmpty_g3gts")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_luby2")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_vq4wr")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_dh3xk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_517k8")
+button_mask = 0
+text = "BACK "
+flat = true
+
+[node name="Back_Focus" type="AnimatedSprite2D" parent="Options"]
+visible = false
+position = Vector2(89, 16)
+sprite_frames = SubResource("SpriteFrames_2mmqx")
+centered = false
+
+[node name="Mater" type="Label" parent="Options"]
+layout_mode = 0
+offset_left = -77.0
+offset_top = -12.0
+offset_right = 15.0
+offset_bottom = 11.0
+theme_override_fonts/font = ExtResource("3_bqlg3")
+theme_override_font_sizes/font_size = 8
+text = "VOLUME"
+
+[node name="HSlider" type="HSlider" parent="Options/Mater"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = -6.0
+offset_right = 201.0
+offset_bottom = 10.0
+focus_neighbor_top = NodePath("../../Back_Button")
+focus_neighbor_bottom = NodePath("../../Back_Button")
+mouse_filter = 2
+min_value = -30.0
+max_value = 30.0
+step = 2.0
+scrollable = false
 
 [connection signal="focus_entered" from="Play_Button" to="." method="_on_play_button_focus_entered"]
 [connection signal="pressed" from="Play_Button" to="." method="_on_play_button_pressed"]
 [connection signal="focus_entered" from="Options_Button" to="." method="_on_options_button_focus_entered"]
+[connection signal="pressed" from="Options_Button" to="." method="_on_options_button_pressed"]
+[connection signal="focus_entered" from="Options/Back_Button" to="." method="_on_back_button_focus_entered"]
+[connection signal="pressed" from="Options/Back_Button" to="." method="_on_back_button_pressed"]
+[connection signal="focus_entered" from="Options/Mater/HSlider" to="." method="_on_h_slider_focus_entered"]
+[connection signal="value_changed" from="Options/Mater/HSlider" to="." method="_on_h_slider_value_changed"]
