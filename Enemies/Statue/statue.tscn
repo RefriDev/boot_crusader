@@ -195,6 +195,7 @@ rotation = 1.5708
 texture = ExtResource("2_kpn3i")
 
 [node name="Activate_Area" type="Area2D" parent="."]
+visible = false
 position = Vector2(2, 0)
 collision_layer = 0
 collision_mask = 2
