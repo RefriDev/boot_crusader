@@ -44,7 +44,7 @@ func _physics_process(delta: float) -> void:
 				
 		
 		if is_flying == true:
-			animation.play("fall")
+			animation.play("idle")
 			var player_pos = player.global_position
 			global_position.x = player_pos.x
 			global_position.y = player_pos.y - 100

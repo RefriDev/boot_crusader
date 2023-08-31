@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dp3jdpiuitt5k"]
+[gd_scene load_steps=26 format=3 uid="uid://dp3jdpiuitt5k"]
 
 [ext_resource type="Texture2D" uid="uid://d2hxtljbb7rkq" path="res://UI/hp_empty.png" id="1_i2k6i"]
 [ext_resource type="Script" path="res://UI/gui.gd" id="1_u7e4v"]
@@ -8,6 +8,12 @@
 [ext_resource type="Texture2D" uid="uid://oot0hno1feyt" path="res://UI/jumps.png" id="5_imwl1"]
 [ext_resource type="FontFile" uid="uid://bil5rf5h7u0ak" path="res://Fonts/BootNumbers.ttf" id="6_2pmwn"]
 [ext_resource type="Texture2D" uid="uid://bbqaj51u7pi4a" path="res://UI/Start.png" id="8_acme2"]
+[ext_resource type="Texture2D" uid="uid://ct6lxybn4hpyy" path="res://UI/dead.png" id="9_nskga"]
+[ext_resource type="FontFile" uid="uid://dyokshud62or5" path="res://Fonts/Old_Steel_9x12_b8.ttf" id="10_qrek1"]
+[ext_resource type="Texture2D" uid="uid://bbkxnol3ko2bi" path="res://Scenes/TitleScreen/options_focus1.png" id="11_nm8mt"]
+[ext_resource type="Texture2D" uid="uid://cowwdogj1sbrb" path="res://Scenes/TitleScreen/options_focus2.png" id="12_s23qh"]
+[ext_resource type="Texture2D" uid="uid://da6k4howpreqm" path="res://Scenes/TitleScreen/play_focus1.png" id="13_smm4i"]
+[ext_resource type="Texture2D" uid="uid://bsptw7vyubxfh" path="res://Scenes/TitleScreen/play_focus2.png" id="14_r3pm6"]
 
 [sub_resource type="Animation" id="Animation_xqp6v"]
 length = 0.001
@@ -34,6 +40,54 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(49, 63.5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DeathScreen/ColorRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DeathScreen/Dead:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("DeathScreen/Retry_Button:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("DeathScreen/Quit_Button:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_0xwxd"]
@@ -64,11 +118,102 @@ tracks/1/keys = {
 "values": [Vector2(49, 63.5), Vector2(49, -39)]
 }
 
+[sub_resource type="Animation" id="Animation_e6dnm"]
+resource_name = "death"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DeathScreen/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DeathScreen/Dead:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DeathScreen/Retry_Button:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DeathScreen/Quit_Button:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_003u7"]
 _data = {
 "RESET": SubResource("Animation_xqp6v"),
+"death": SubResource("Animation_e6dnm"),
 "start": SubResource("Animation_0xwxd")
 }
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ql7q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c35lo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uicc2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ow5v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f2kp2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_julgl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_nm8mt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_s23qh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xjmmj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_smm4i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_r3pm6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
 
 [node name="GUI" type="Control"]
 layout_mode = 3
@@ -162,10 +307,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 49.0
-offset_top = 63.5
-offset_right = 191.0
-offset_bottom = 96.5001
+offset_left = -71.0
+offset_top = -16.5
+offset_right = 71.0
+offset_bottom = 16.5001
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("8_acme2")
@@ -175,4 +320,104 @@ libraries = {
 "": SubResource("AnimationLibrary_003u7")
 }
 
+[node name="DeathScreen" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 240.0
+offset_bottom = 160.0
+
+[node name="ColorRect" type="ColorRect" parent="DeathScreen"]
+layout_mode = 0
+offset_right = 240.0
+offset_bottom = 160.0
+color = Color(0, 0, 0, 1)
+
+[node name="Dead" type="TextureRect" parent="DeathScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -57.5
+offset_top = -16.5
+offset_right = 57.5
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_nskga")
+
+[node name="Retry_Button" type="Button" parent="DeathScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = 28.0
+offset_right = 19.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_top = NodePath("../Quit_Button")
+focus_neighbor_bottom = NodePath("../Quit_Button")
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("10_qrek1")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8ql7q")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_c35lo")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_uicc2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_8ow5v")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f2kp2")
+button_mask = 0
+text = "RETRY"
+flat = true
+
+[node name="Retry_Focus" type="AnimatedSprite2D" parent="DeathScreen"]
+visible = false
+position = Vector2(95, 107)
+scale = Vector2(0.892857, 1)
+sprite_frames = SubResource("SpriteFrames_julgl")
+frame_progress = 0.659284
+centered = false
+
+[node name="Quit_Button" type="Button" parent="DeathScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = 45.0
+offset_right = 19.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_top = NodePath("../Retry_Button")
+focus_neighbor_bottom = NodePath("../Retry_Button")
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("10_qrek1")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8ql7q")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_c35lo")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_uicc2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_8ow5v")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f2kp2")
+button_mask = 0
+text = "QUIT"
+flat = true
+
+[node name="Quit_Focus" type="AnimatedSprite2D" parent="DeathScreen"]
+visible = false
+position = Vector2(100, 124)
+sprite_frames = SubResource("SpriteFrames_xjmmj")
+frame = 1
+frame_progress = 0.425283
+centered = false
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="focus_entered" from="DeathScreen/Retry_Button" to="." method="_on_retry_button_focus_entered"]
+[connection signal="pressed" from="DeathScreen/Retry_Button" to="." method="_on_retry_button_pressed"]
+[connection signal="focus_entered" from="DeathScreen/Quit_Button" to="." method="_on_quit_button_focus_entered"]
+[connection signal="pressed" from="DeathScreen/Quit_Button" to="." method="_on_quit_button_pressed"]

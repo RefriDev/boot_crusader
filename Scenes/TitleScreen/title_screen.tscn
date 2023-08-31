@@ -120,7 +120,6 @@ flat = true
 visible = false
 position = Vector2(100, 94)
 sprite_frames = SubResource("SpriteFrames_2mmqx")
-frame_progress = 0.771322
 centered = false
 
 [node name="Options_Button" type="Button" parent="."]

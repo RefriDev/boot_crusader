@@ -39,6 +39,8 @@ extends CharacterBody2D
 @onready var stomp_sound := $Stomp_Sound
 @onready var start_timer := $Start_Timer
 
+@onready var camera := $Camera2D
+
 var jump_counter : int = 0
 var jump_buffer_counter : int = 0
 var cayote_counter : int = 0
@@ -57,6 +59,7 @@ func _physics_process(delta: float) -> void:
 	if can_move == true:
 	
 		if is_on_floor():
+			
 			if in_air == true:
 				var effect_inst = land_effect.instantiate()
 				get_parent().add_child(effect_inst)
@@ -145,7 +148,8 @@ func _on_hitbox_body_entered(_body: Node2D) -> void:
 	take_damage(Vector2(300,-200))
 	
 	if Global.health <= 0:
-		print("dead")
+		can_move = false
+		Global.dead = true
 
 func take_damage(knockback_force := Vector2.ZERO, duration := 0.25):
 	hit_sound.play()

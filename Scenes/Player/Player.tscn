@@ -166,7 +166,7 @@ stream = ExtResource("18_vju2c")
 stream = ExtResource("19_ud65h")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position_smoothing_speed = 20.0
+position_smoothing_speed = 10.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_top_margin = 0.6
